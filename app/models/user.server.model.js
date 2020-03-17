@@ -36,26 +36,26 @@ var UserSchema = new Schema({
     validate: [
       studentNumber => studentNumber && studentNumber.length == 9,
       "studentNumber should be 9 digits"
-    ],
-    address: {
-      type: String,
-      required: "address is required"
-    },
-    city: {
-      type: String,
-      required: "city is required"
-    },
-    phonenumber: {
-      type: String,
-      validate: [
-        phonenumber => phonenumber && phonenumber.length == 10,
-        "phonenumber should be 10 digits"
-      ]
-    },
-    program: {
-      type: String,
-      require: "program is required"
-    }
+    ]
+  },
+  address: {
+    type: String,
+    required: "address is required"
+  },
+  city: {
+    type: String,
+    required: "city is required"
+  },
+  phonenumber: {
+    type: String,
+    validate: [
+      phonenumber => phonenumber && phonenumber.length == 10,
+      "phonenumber should be 10 digits"
+    ]
+  },
+  program: {
+    type: String,
+    require: "program is required"
   }
 });
 
