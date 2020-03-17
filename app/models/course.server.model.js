@@ -8,8 +8,7 @@ const CourseSchema = new Schema({
   courseCode: {
     type: String,
     default: "",
-    required: "courseCode cannot be blank",
-    validate: [courseCode => courseCode && courseCode.length == 4]
+    required: "courseCode cannot be blank"
   },
   courseName: {
     type: String,
