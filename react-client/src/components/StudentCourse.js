@@ -6,17 +6,17 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 import { withRouter } from "react-router-dom";
 
-function List(props) {
+function StudentCourse(props) {
   //console.log("props.match.params", props.match.params.id);
   const [data, setData] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:3000/api/articles";
+  const apiUrl = "http://localhost:3000/userBycourse";
 
   useEffect(() => {
     setShowLoading(false);
     const fetchData = async () => {
       const result = await axios(apiUrl);
-      console.log("results from articles", result.data);
+      console.log("results from course", result.data);
 
       setData(result.data);
       setShowLoading(false);
@@ -30,7 +30,6 @@ function List(props) {
       pathname: "/showarticle/" + id
     });
   };
-  console.log("data");
 
   return (
     <div>
@@ -56,4 +55,4 @@ function List(props) {
   );
 }
 
-export default withRouter(List);
+export default withRouter(StudentCourse);

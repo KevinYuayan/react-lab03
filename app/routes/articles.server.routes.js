@@ -13,6 +13,7 @@ module.exports = function(app) {
   app
     .route("/api/articles/:articleId")
     .get(articles.read)
+    .get(articles.articleByID)
     //.put(users.requiresLogin, articles.update)
     .put(articles.update)
     // .put(users.requiresLogin, articles.hasAuthorization, articles.update)

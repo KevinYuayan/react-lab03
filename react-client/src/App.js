@@ -18,6 +18,7 @@ import EditArticle from "./components/EditArticle";
 import CreateUser from "./components/CreateUser";
 import ShowUser from "./components/ShowUser";
 import ShowArticle from "./components/ShowArticle";
+import StudentCourse from "./components/StudentCourse";
 
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -49,6 +50,7 @@ function App() {
         <Route render={() => <ShowArticle />} path="/showarticle/:id" />
         <Route render={() => <ListCourse />} path="/ListCourse" />
         <Route render={() => <EditArticle />} path="/editarticle/:id" />
+        <Route render={() => <StudentCourse />} path="/StudentCourse" />
       </div>
     </Router>
   );

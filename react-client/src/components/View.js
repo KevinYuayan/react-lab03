@@ -1,4 +1,5 @@
 import CreateArticle from "./CreateArticle";
+import StudentCourse from "./StudentCourse";
 import React, { useState } from "react";
 //
 import axios from "axios";
@@ -27,33 +28,59 @@ function View(props) {
   const getData = async () => {
     try {
       const res = await axios.get("/welcome");
+      console.get("res.data");
       console.log(res.data);
       setData(res.data);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const getDataCourse = async () => {
+    try {
+      const res = await axios.get("/userBycourse");
+      console.log("data at course");
+      console.log(res.articles);
+      setArticle("w");
+      setData(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   //
   const createArticle = () => {
     console.log("in createArticle");
     setArticle("y");
   };
   //
-  return (
-    <div className="App">
-      {article !== "y" ? (
+  if (article === "y") {
+    return (
+      <div className="App">
+        <CreateArticle screen={screen} setScreen={setScreen} />
+        {/* <ListCourse screen={screen} setScreen={setScreen} /> */}
+      </div>
+    );
+  } else if (article === "w") {
+    return (
+      <div className="App">
+        <StudentCourse screen={screen} setScreen={setScreen} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
         <div>
           <p>{screen}</p>
           <p>{data}</p>
           <button onClick={getData}>Get Data</button>
           <button onClick={createArticle}>Create Article</button>
           <button onClick={deleteCookie}>Log out</button>
+          <button onClick={getDataCourse}>Get Course</button>
         </div>
-      ) : (
-        <CreateArticle screen={screen} setScreen={setScreen} />
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 //
