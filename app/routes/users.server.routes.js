@@ -1,6 +1,7 @@
 ﻿// Load the 'users' controller
 var users = require("../../app/controllers/users.server.controller");
 var express = require("express");
+var passport = require("passport");
 var router = express.Router();
 // Define the routes module' method
 module.exports = function(app) {
@@ -23,7 +24,9 @@ module.exports = function(app) {
   //even if the parameter is matched in multiple routes
   app.param("userId", users.userByID);
   //authenticate user
-  app.post("/signin", users.authenticate);
+  app.post("/signin", passport.authenticate("local"), function(req, res) {
+    console.log("authenticated successfully");
+  });
   app.get("/signout", users.signout);
   app.get("/read_cookie", users.isSignedIn);
 

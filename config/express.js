@@ -10,6 +10,8 @@ var config = require("./config"),
   session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const flash = require("connect-flash");
+const passport = require("passport");
 
 // Create a new Express application instance
 module.exports = function() {
@@ -61,12 +63,19 @@ module.exports = function() {
   app.set("views", "./app/views");
   app.set("view engine", "ejs");
   app.engine("html", require("ejs").renderFile);
+
+  // Configure the flash messages middleware
+  app.use(flash());
+
+  // Configure the Passport middleware
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   //bootstrap the app using the controller and routing modules
   // Load the routing files
   require("../app/routes/index.server.routes.js")(app);
   require("../app/routes/users.server.routes.js")(app);
   require("../app/routes/articles.server.routes.js")(app);
-  require("../app/routes/course.server.routes.js")(app);
 
   //The express.static() middleware takes one argument
   //to determine the location of the static folder

@@ -112,61 +112,61 @@ exports.delete = function(req, res, next) {
 };
 //
 // authenticates a user
-exports.authenticate = function(req, res, next) {
-  // Get credentials from request
-  console.log(req.body);
-  const username = req.body.auth.username;
-  const password = req.body.auth.password;
-  console.log(password);
-  console.log(username);
-  //find the user with given username using static method findOne
-  User.findOne({ username: username }, (err, user) => {
-    if (err) {
-      return next(err);
-    } else {
-      console.log("++++++");
-      console.log(user);
-      //compare passwords
-      if (bcrypt.compareSync(password, user.password)) {
-        // Create a new token with the user id in the payload
-        // and which expires 300 seconds after issue
-        const token = jwt.sign({ username: user.username }, jwtKey, {
-          algorithm: "HS256",
-          expiresIn: jwtExpirySeconds
-        });
-        console.log("token:", token);
-        // set the cookie as the token string, with a similar max age as the token
-        // here, the max age is in milliseconds
-        res.cookie("token", token, {
-          maxAge: jwtExpirySeconds * 1000,
-          httpOnly: true
-        });
-        res.cookie("userid", user._id, {
-          maxAge: jwtExpirySeconds * 1000,
-          httpOnly: true
-        });
+// exports.authenticate = function(req, res, next) {
+//   // Get credentials from request
+//   console.log(req.body);
+//   const username = req.body.auth.username;
+//   const password = req.body.auth.password;
+//   console.log(password);
+//   console.log(username);
+//   //find the user with given username using static method findOne
+//   User.findOne({ username: username }, (err, user) => {
+//     if (err) {
+//       return next(err);
+//     } else {
+//       console.log("++++++");
+//       console.log(user);
+//       //compare passwords
+//       if (bcrypt.compareSync(password, user.password)) {
+//         // Create a new token with the user id in the payload
+//         // and which expires 300 seconds after issue
+//         const token = jwt.sign({ username: user.username }, jwtKey, {
+//           algorithm: "HS256",
+//           expiresIn: jwtExpirySeconds
+//         });
+//         console.log("token:", token);
+//         // set the cookie as the token string, with a similar max age as the token
+//         // here, the max age is in milliseconds
+//         res.cookie("token", token, {
+//           maxAge: jwtExpirySeconds * 1000,
+//           httpOnly: true
+//         });
+//         res.cookie("userid", user._id, {
+//           maxAge: jwtExpirySeconds * 1000,
+//           httpOnly: true
+//         });
 
-        console.log("user id+++");
-        console.log(user._id);
+//         console.log("user id+++");
+//         console.log(user._id);
 
-        res.status(200).send({ screen: user.username });
-        //
-        //res.json({status:"success", message: "user found!!!", data:{user:
-        //user, token:token}});
+//         res.status(200).send({ screen: user.username });
+//         //
+//         //res.json({status:"success", message: "user found!!!", data:{user:
+//         //user, token:token}});
 
-        req.user = user;
-        //call the next middleware
-        next();
-      } else {
-        res.json({
-          status: "error",
-          message: "Invalid username/password!!!",
-          data: null
-        });
-      }
-    }
-  });
-};
+//         req.user = user;
+//         //call the next middleware
+//         next();
+//       } else {
+//         res.json({
+//           status: "error",
+//           message: "Invalid username/password!!!",
+//           data: null
+//         });
+//       }
+//     }
+//   });
+// };
 //
 // protected page uses the JWT token
 exports.welcome = (req, res) => {

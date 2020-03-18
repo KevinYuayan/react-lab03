@@ -44,7 +44,10 @@ function CreateUser(props) {
         setShowLoading(false);
         props.history.push("/show/" + result.data._id);
       })
-      .catch(error => setShowLoading(false));
+      .catch(error => {
+        console.log(error);
+        setShowLoading(false);
+      });
   };
 
   const onChange = e => {
