@@ -1,126 +1,111 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
 
-function EditArticle(props) {
-  console.log("edituser props:", props.match.params);
-  const [article, setArticle] = useState({
+//
+function CreateCourse(props) {
+  //
+  const username = props.screen;
+  console.log("props.screen", props.screen);
+  const [course, setCourse] = useState({
     _id: "",
     courseCode: "",
     courseName: "",
-    semester: "",
-    section: ""
+    username: "",
+    section: "",
+    semester: ""
   });
-  const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:3000/api/articles/" + props.match.params.id;
-  console.log(apiUrl);
-  console.log(article.courseCode);
-
-  console.log(article.courseName);
-
-  //runs only once after the first render
-  useEffect(() => {
-    setShowLoading(false);
-    //call api
-    const fetchData = async () => {
-      const result = await axios(apiUrl);
-      setArticle(result.data);
-      console.log(result.data);
-      setShowLoading(false);
-    };
-
-    fetchData();
-  }, []);
-
-  const updateArticle = e => {
+  const [showLoading, setShowLoading] = useState(false);
+  //
+  const apiUrl = "http://localhost:3000/api/courses";
+  //
+  const saveCourse = e => {
     setShowLoading(true);
     e.preventDefault();
-
-    console.log("result");
-    console.log(article.courseCode);
-    console.log(article.courseName);
-
     const data = {
-      courseCode: article.courseCode,
-      courseName: article.courseName,
-      semester: article.semester,
-      section: article.section
+      courseCode: course.courseCode,
+      courseName: course.courseName,
+      username: username,
+      semester: course.semester,
+      section: course.section
     };
+    //
     axios
-      .put(apiUrl, data)
+      .post(apiUrl, data)
       .then(result => {
-        console.log(result);
-        console.log("after calling put to update", result.data);
         setShowLoading(false);
-        props.history.push("/showarticle/" + props.match.params.id);
+        console.log("results from save course:", result.data);
+        props.history.push("/showcourse/" + result.data._id);
       })
       .catch(error => setShowLoading(false));
   };
-  //runs when user enters a field
+  //
   const onChange = e => {
     e.persist();
-    setArticle({ ...article, [e.target.name]: e.target.value });
+    setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
   return (
     <div>
+      <h2> Add a Course {username} </h2>
       {showLoading && (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
       )}
       <Jumbotron>
-        <Form onSubmit={updateArticle}>
+        <Form onSubmit={saveCourse}>
           <Form.Group>
-            <Form.Label> courseCode</Form.Label>
+            <Form.Label> course Code</Form.Label>
             <Form.Control
               type="text"
               name="courseCode"
               id="courseCode"
               placeholder="Enter courseCode"
-              value={article.courseCode}
+              value={course.courseCode}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label> course Name</Form.Label>
+            <Form.Label> Course Name</Form.Label>
             <Form.Control
               type="text"
               name="courseName"
               id="courseName"
               placeholder="Enter courseName"
-              value={article.courseName}
+              value={course.courseName}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label> section Name</Form.Label>
+            <Form.Label> Section </Form.Label>
             <Form.Control
               type="text"
               name="section"
               id="section"
               placeholder="Enter section"
-              value={article.section}
+              value={course.section}
               onChange={onChange}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label> semester Name</Form.Label>
+            <Form.Label> Semester </Form.Label>
             <Form.Control
               type="text"
               name="semester"
               id="semester"
               placeholder="Enter semester"
-              value={article.semester}
+              value={course.semester}
               onChange={onChange}
             />
           </Form.Group>
+
           <Button variant="primary" type="submit">
-            Update Course
+            Save Course
           </Button>
         </Form>
       </Jumbotron>
@@ -128,4 +113,4 @@ function EditArticle(props) {
   );
 }
 
-export default withRouter(EditArticle);
+export default withRouter(CreateCourse);

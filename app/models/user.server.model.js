@@ -28,34 +28,34 @@ var UserSchema = new Schema({
     // Validate the 'password' value length
     validate: [
       password => password && password.length > 6,
-      "Password should be longer"
+      "Password should be atleast 7 digits"
     ]
   },
   studentNumber: {
     type: String,
     validate: [
       studentNumber => studentNumber && studentNumber.length == 9,
-      "studentNumber should be 9 digits"
+      "Student Number should be 9 digits"
     ]
   },
   address: {
     type: String,
-    required: "address is required"
+    required: "Address is required"
   },
   city: {
     type: String,
-    required: "city is required"
+    required: "City is required"
   },
   phonenumber: {
     type: String,
     validate: [
       phonenumber => phonenumber && phonenumber.length == 10,
-      "phonenumber should be 10 digits"
+      "Phone number should be 10 digits"
     ]
   },
   program: {
     type: String,
-    require: "program is required"
+    require: "Program is required"
   }
 });
 

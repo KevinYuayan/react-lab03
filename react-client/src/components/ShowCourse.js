@@ -5,17 +5,17 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import { withRouter } from "react-router-dom";
 
-function ShowArticle(props) {
+function ShowCourse(props) {
   console.log("props.match.params", props.match.params.id);
   const [data, setData] = useState({});
   const [showLoading, setShowLoading] = useState(true);
-  const apiUrl = "http://localhost:3000/api/articles/" + props.match.params.id;
+  const apiUrl = "http://localhost:3000/api/courses/" + props.match.params.id;
 
   useEffect(() => {
     setShowLoading(false);
     const fetchData = async () => {
       const result = await axios(apiUrl);
-      console.log("results from articles", result.data);
+      console.log("results from courses", result.data);
 
       setData(result.data);
       setShowLoading(false);
@@ -24,15 +24,15 @@ function ShowArticle(props) {
     fetchData();
   }, []);
 
-  const editArticle = id => {
+  const editCourse = id => {
     props.history.push({
-      pathname: "/editarticle/" + id
+      pathname: "/editcourse/" + id
     });
   };
 
-  const deleteArticle = id => {
+  const deleteCourse = id => {
     setShowLoading(true);
-    const article = {
+    const course = {
       courseCode: data.courseCode,
       courseName: data.courseName,
       semester: data.semester,
@@ -40,7 +40,7 @@ function ShowArticle(props) {
     };
     //
     axios
-      .delete(apiUrl, article)
+      .delete(apiUrl, course)
       .then(result => {
         setShowLoading(false);
         props.history.push("/ListCourse");
@@ -64,7 +64,7 @@ function ShowArticle(props) {
             type="button"
             variant="primary"
             onClick={() => {
-              editArticle(data._id);
+              editCourse(data._id);
             }}
           >
             Edit
@@ -74,7 +74,7 @@ function ShowArticle(props) {
             type="button"
             variant="danger"
             onClick={() => {
-              deleteArticle(data._id);
+              deleteCourse(data._id);
             }}
           >
             Delete
@@ -85,4 +85,4 @@ function ShowArticle(props) {
   );
 }
 
-export default withRouter(ShowArticle);
+export default withRouter(ShowCourse);

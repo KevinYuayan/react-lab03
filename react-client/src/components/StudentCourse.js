@@ -27,7 +27,7 @@ function StudentCourse(props) {
 
   const showDetail = id => {
     props.history.push({
-      pathname: "/showarticle/" + id
+      pathname: "/showcourse/" + id
     });
   };
 

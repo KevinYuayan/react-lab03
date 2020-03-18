@@ -1,4 +1,4 @@
-import CreateArticle from "./CreateArticle";
+import CreateCourse from "./CreateCourse";
 import StudentCourse from "./StudentCourse";
 import React, { useState } from "react";
 //
@@ -10,7 +10,7 @@ function View(props) {
   // return a stateful value and funcion to update it
   const [data, setData] = useState();
   //
-  const [article, setArticle] = useState("");
+  const [course, setCourse] = useState("");
   // called when user clicks on Logout button
   // to clear the cookie and set the screen state variable
   // back to its initial state.
@@ -40,8 +40,8 @@ function View(props) {
     try {
       const res = await axios.get("/userBycourse");
       console.log("data at course");
-      console.log(res.articles);
-      setArticle("w");
+      console.log(res.courses);
+      setCourse("w");
       setData(res.data);
     } catch (e) {
       console.log(e);
@@ -49,19 +49,19 @@ function View(props) {
   };
 
   //
-  const createArticle = () => {
-    console.log("in createArticle");
-    setArticle("y");
+  const createCourse = () => {
+    console.log("in createCourse");
+    setCourse("y");
   };
   //
-  if (article === "y") {
+  if (course === "y") {
     return (
       <div className="App">
-        <CreateArticle screen={screen} setScreen={setScreen} />
+        <CreateCourse screen={screen} setScreen={setScreen} />
         {/* <ListCourse screen={screen} setScreen={setScreen} /> */}
       </div>
     );
-  } else if (article === "w") {
+  } else if (course === "w") {
     return (
       <div className="App">
         <StudentCourse screen={screen} setScreen={setScreen} />
@@ -74,7 +74,7 @@ function View(props) {
           <p>{screen}</p>
           <p>{data}</p>
           <button onClick={getData}>Get Data</button>
-          <button onClick={createArticle}>Create Article</button>
+          <button onClick={createCourse}>Create Course</button>
           <button onClick={deleteCookie}>Log out</button>
           <button onClick={getDataCourse}>Get Course</button>
         </div>

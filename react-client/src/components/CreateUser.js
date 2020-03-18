@@ -21,7 +21,8 @@ function CreateUser(props) {
     phonenumber: ""
   });
   const [showLoading, setShowLoading] = useState(false);
-  const apiUrl = "http://localhost:3000/";
+  const [errorMessage, setErrorMessage] = useState("");
+  const apiUrl = "http://localhost:3000/create_user";
 
   const saveUser = e => {
     setShowLoading(true);
@@ -45,7 +46,9 @@ function CreateUser(props) {
         props.history.push("/show/" + result.data._id);
       })
       .catch(error => {
-        console.log(error);
+        if (error.response && error.response.data) {
+          setErrorMessage(error.response.data.message);
+        }
         setShowLoading(false);
       });
   };
@@ -121,7 +124,7 @@ function CreateUser(props) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Student Number</Form.Label>
+            <Form.Label>Student Number (9 digits)</Form.Label>
             <Form.Control
               type="text"
               name="studentNumber"
@@ -154,7 +157,7 @@ function CreateUser(props) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Phone Number</Form.Label>
+            <Form.Label>Phone Number (10 digits)</Form.Label>
             <Form.Control
               type="text"
               name="phonenumber"
@@ -175,6 +178,8 @@ function CreateUser(props) {
               onChange={onChange}
             />
           </Form.Group>
+
+          {errorMessage && <h4>{errorMessage}</h4>}
           <Button variant="primary" type="submit">
             Save
           </Button>

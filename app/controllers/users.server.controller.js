@@ -1,6 +1,6 @@
 ﻿// Load the module dependencies
 const User = require("mongoose").model("User");
-const Article = require("mongoose").model("Article");
+const Course = require("mongoose").model("Course");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../../config/config");
@@ -45,10 +45,18 @@ exports.create = function(req, res, next) {
   user.save(function(err) {
     if (err) {
       // Call the next middleware with an error message
-      return next(err);
+      return res.status(400).json({
+        message: getErrorMessage(err)
+      });
     } else {
-      // Use the 'response' object to send a JSON response
-      res.json(user);
+      // If the user was created successfully use the Passport 'login' method to login
+      req.login(user, err => {
+        // If a login error occurs move to the next middleware
+        if (err) return next(err);
+
+        // Redirect the user back to the main application page
+        return res.redirect("/");
+      });
     }
   });
 };
@@ -303,17 +311,17 @@ exports.userBycourse = function(req, res, next) {
   // username given in the token
   console.log(payload);
   //res.send(`Welcome user with user name: ${payload.username}!`);
-  Article.find({ creator: userid }, function(err, articles) {
+  Course.find({ creator: userid }, function(err, courses) {
     if (err) {
       return res.status(400).send({
         message: getErrorMessage(err)
       });
     } else {
-      console.log(articles);
-      //res.send(`Welcome user with user name: ${articles}!`);
-      res.send(articles);
+      console.log(courses);
+      //res.send(`Welcome user with user name: ${courses}!`);
+      res.send(courses);
 
-      // res.status(200).json(articles);
+      // res.status(200).json(courses);
     }
   });
 };

@@ -13,11 +13,11 @@ import "./App.css";
 //
 import List from "./components/List";
 import EditUser from "./components/EditUser";
-import EditArticle from "./components/EditArticle";
+import EditCourse from "./components/EditCourse";
 
 import CreateUser from "./components/CreateUser";
 import ShowUser from "./components/ShowUser";
-import ShowArticle from "./components/ShowArticle";
+import ShowCourse from "./components/ShowCourse";
 import StudentCourse from "./components/StudentCourse";
 
 import Home from "./components/Home";
@@ -47,9 +47,9 @@ function App() {
         <Route render={() => <EditUser />} path="/edit/:id" />
         <Route render={() => <CreateUser />} path="/create" />
         <Route render={() => <ShowUser />} path="/show/:id" />
-        <Route render={() => <ShowArticle />} path="/showarticle/:id" />
+        <Route render={() => <ShowCourse />} path="/showcourse/:id" />
         <Route render={() => <ListCourse />} path="/ListCourse" />
-        <Route render={() => <EditArticle />} path="/editarticle/:id" />
+        <Route render={() => <EditCourse />} path="/editcourse/:id" />
         <Route render={() => <StudentCourse />} path="/StudentCourse" />
       </div>
     </Router>
