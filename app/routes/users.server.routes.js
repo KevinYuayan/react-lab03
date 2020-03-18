@@ -24,9 +24,7 @@ module.exports = function(app) {
   //even if the parameter is matched in multiple routes
   app.param("userId", users.userByID);
   //authenticate user
-  app.post("/signin", passport.authenticate("local"), function(req, res) {
-    console.log("authenticated successfully");
-  });
+  app.post("/signin", users.authenticate);
   app.get("/signout", users.signout);
   app.get("/read_cookie", users.isSignedIn);
 

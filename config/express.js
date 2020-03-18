@@ -66,6 +66,7 @@ module.exports = function() {
   // Configure the Passport middleware
   app.use(passport.initialize());
   app.use(passport.session());
+  require("./passport")(passport);
 
   //bootstrap the app using the controller and routing modules
   // Load the routing files
